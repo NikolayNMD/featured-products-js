@@ -62,79 +62,74 @@ async function fetchProducts() {
 }
 
 function renderProducts(products) {
-  const productsContainer = document.querySelector(".products_container");
+  const productsList = document.querySelector(".products_list");
 
-  products.forEach((productEdge) => {
-    const product = productEdge.node;
+  const productsHTML = products
+    .map((productEdge) => {
+      const product = productEdge.node;
+      const title = product.title || "No title";
+      const description = product.description || "Lorem ipsum dolor sit amet";
 
-    const title = product.title || "No title";
-    const description = product.description || "Lorem ipsum dolor sit amet";
+      const variant = product.variants.edges[0]?.node;
+      const price = variant?.price?.amount;
+      const currency = variant?.price?.currencyCode;
+      const compareAtPrice = variant?.compareAtPrice?.amount;
+      const compareAtCurrency = variant?.compareAtPrice?.currencyCode;
 
-    const variant = product.variants.edges[0]?.node;
-    const price = variant?.price?.amount;
-    const currency = variant?.price?.currencyCode;
-    const compareAtPrice = variant?.compareAtPrice?.amount;
-    const compareAtCurrency = variant?.compareAtPrice?.currencyCode;
+      const images = product.images.edges;
+      const firstImageUrl = images[0]?.node?.url || "";
+      const secondImageUrl = images[1]?.node?.url || firstImageUrl || "";
 
-    const productCard = document.createElement("div");
-    productCard.classList.add("product_card");
+      return `
+      <li class="product_card">
+        <div class="image_wrapper">
+          <img src="${firstImageUrl}" alt="Product" />
+          <img src="${secondImageUrl}" alt="Product" class="second_image" />
+        </div>
+        <div class="product_info">
+          <h3 class="product_title">${title}</h3>
+          <p class="product_description">${description}</p>
+          ${
+            compareAtPrice
+              ? `<span class="product_compare_price">${compareAtPrice} ${compareAtCurrency}</span>`
+              : ""
+          }
+          <span class="product_price">${
+            price ? `${price} ${currency}` : "N/A"
+          }</span>
+        </div>
+      </li>
+    `;
+    })
+    .join("");
 
-    const imageWrapper = document.createElement("div");
-    imageWrapper.classList.add("image_wrapper");
+  productsList.insertAdjacentHTML("beforeend", productsHTML);
+}
 
-    const images = product.images.edges;
+function showFAQ() {
+  const faqItems = document.querySelectorAll(".faq_item");
 
-    const firstImageUrl = images[0]?.node?.url;
-    const secondImageUrl = images[1]?.node?.url;
+  faqItems.forEach((item) => {
+    const questionDiv = item.querySelector(".faq_item_question_icon_div");
+    const answer = item.querySelector(".faq_answer");
+    const iconUse = item.querySelector(".icon use");
+    const iconSvg = item.querySelector(".icon");
 
-    const firstImage = document.createElement("img");
-    firstImage.src = firstImageUrl || "";
-    firstImage.alt = title || "Product";
+    questionDiv.addEventListener("click", function () {
+      answer.classList.toggle("is-hidden");
 
-    const secondImage = document.createElement("img");
-    secondImage.src = secondImageUrl || firstImageUrl || "";
-    secondImage.alt = title || "Product";
-    secondImage.classList.add("second_image");
-
-    imageWrapper.appendChild(firstImage);
-    imageWrapper.appendChild(secondImage);
-
-    const productInfo = document.createElement("div");
-    productInfo.classList.add("product_info");
-
-    const productTitle = document.createElement("h3");
-    productTitle.classList.add("product_title");
-    productTitle.textContent = title;
-
-    const productDesc = document.createElement("p");
-    productDesc.classList.add("product_description");
-    productDesc.textContent = description;
-
-    const priceEl = document.createElement("span");
-    priceEl.classList.add("product_price");
-    if (price && currency) {
-      priceEl.textContent = `${price} ${currency}`;
-    } else {
-      priceEl.textContent = "N/A";
-    }
-
-    const comparePriceEl = document.createElement("span");
-    comparePriceEl.classList.add("product_compare_price");
-    if (compareAtPrice && compareAtCurrency) {
-      comparePriceEl.textContent = `${compareAtPrice} ${compareAtCurrency}`;
-    }
-
-    productInfo.appendChild(productTitle);
-    productInfo.appendChild(productDesc);
-    productInfo.appendChild(priceEl);
-    if (compareAtPrice) {
-      productInfo.appendChild(comparePriceEl);
-    }
-
-    productCard.appendChild(imageWrapper);
-    productCard.appendChild(productInfo);
-
-    productsContainer.appendChild(productCard);
+      if (answer.classList.contains("is-hidden")) {
+        iconUse.setAttribute("href", "./icons/icons.svg#icon_plus");
+        iconSvg.setAttribute("width", "22");
+        iconSvg.setAttribute("height", "22");
+        item.style.backgroundColor = "var(--itemBg-color)";
+      } else {
+        iconUse.setAttribute("href", "./icons/icons.svg#icon_minus");
+        iconSvg.setAttribute("width", "20");
+        iconSvg.setAttribute("height", "20");
+        item.style.backgroundColor = "var(--itemBg-active-color)";
+      }
+    });
   });
 }
 
@@ -142,4 +137,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const products = await fetchProducts();
 
   renderProducts(products);
+
+  showFAQ();
 });

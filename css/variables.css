@@ -23,7 +23,7 @@ body {
 @media (min-width: 376px) {
   .container {
     max-width: 1440px;
-    padding: 40px 60px;
+    padding: 40px 0;
   }
 }
 
