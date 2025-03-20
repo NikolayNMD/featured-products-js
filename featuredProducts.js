@@ -116,18 +116,41 @@ function showFAQ() {
     const iconSvg = item.querySelector(".icon");
 
     questionDiv.addEventListener("click", function () {
-      answer.classList.toggle("is-hidden");
+      const isOpen = answer.classList.contains("is-visible");
 
-      if (answer.classList.contains("is-hidden")) {
-        iconUse.setAttribute("href", "./icons/icons.svg#icon_plus");
-        iconSvg.setAttribute("width", "22");
-        iconSvg.setAttribute("height", "22");
-        item.style.backgroundColor = "var(--itemBg-color)";
-      } else {
+      // Закриваємо всі інші відповіді перед відкриттям нової
+      document.querySelectorAll(".faq_answer").forEach((el) => {
+        el.classList.remove("is-visible");
+        el.classList.add("is-hidden");
+      });
+
+      document.querySelectorAll(".faq_item").forEach((el) => {
+        el.style.backgroundColor = "var(--itemBg-color)";
+      });
+
+      document.querySelectorAll(".icon use").forEach((el) => {
+        el.setAttribute("href", "./icons/icons.svg#icon_plus");
+      });
+
+      document.querySelectorAll(".icon").forEach((el) => {
+        el.setAttribute("width", "22");
+        el.setAttribute("height", "22");
+        el.classList.remove("rotate");
+      });
+
+      if (!isOpen) {
+        answer.classList.remove("is-hidden");
+        answer.classList.add("is-visible");
+
         iconUse.setAttribute("href", "./icons/icons.svg#icon_minus");
         iconSvg.setAttribute("width", "20");
         iconSvg.setAttribute("height", "20");
         item.style.backgroundColor = "var(--itemBg-active-color)";
+        iconSvg.classList.add("rotate");
+      } else {
+        answer.classList.remove("is-visible");
+        answer.classList.add("is-hidden");
+        iconSvg.classList.remove("rotate");
       }
     });
   });
