@@ -1,4 +1,4 @@
-const query = `
+const PRODUCTS_QUERY = `
   {
     products(first: 10) {
       edges {
@@ -33,4 +33,4 @@ const query = `
   }
 `;
 
-export default query;
+export default PRODUCTS_QUERY;

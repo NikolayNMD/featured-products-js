@@ -1,18 +1,19 @@
-import query from "./graphQLQuery.js";
+import PRODUCTS_QUERY from "./graphQLQuery.js";
 
-const API_ENDPOINT =
-  "https://tsodykteststore.myshopify.com/api/2023-01/graphql.json";
-const token = "7e174585a317d187255660745da44cc7";
+const API_CONFIG = {
+  endpoint: "https://tsodykteststore.myshopify.com/api/2023-01/graphql.json",
+  token: "7e174585a317d187255660745da44cc7",
+};
 
 async function fetchProducts() {
   try {
-    const response = await fetch(API_ENDPOINT, {
+    const response = await fetch(API_CONFIG.endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Shopify-Storefront-Access-Token": token,
+        "X-Shopify-Storefront-Access-Token": API_CONFIG.token,
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query: PRODUCTS_QUERY }),
     });
 
     if (!response.ok) {
@@ -85,7 +86,6 @@ function showFAQ() {
     questionDiv.addEventListener("click", function () {
       const isOpen = answer.classList.contains("is-visible");
 
-      // Закриваємо всі інші відповіді перед відкриттям нової
       document.querySelectorAll(".faq_answer").forEach((el) => {
         el.classList.remove("is-visible");
         el.classList.add("is-hidden");
