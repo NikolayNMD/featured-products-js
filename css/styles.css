@@ -1,0 +1,56 @@
+@import url("./reset.css");
+@import url("./variables.css");
+
+.featured_products_section {
+  padding-bottom: 100px;
+}
+
+.featured_products_section h2 {
+  font-weight: 700;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.featured_products_descr {
+  margin-bottom: 40px;
+}
+
+/*FAQ*/
+
+.faq_section h2 {
+  font-weight: 500;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.faq_descr {
+  margin-bottom: 40px;
+}
+
+.faq_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background-color: var(--itemBg-color);
+  border-radius: 12px;
+}
+
+.faq_item_question {
+  width: 180px;
+  font-size: 16px;
+}
+
+.faq_item_plus_btn {
+  background-color: transparent;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+}

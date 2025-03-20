@@ -1,0 +1,45 @@
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--black-color);
+}
+
+:root {
+  --black-color: #000000;
+  --itemBg-color: #f7f8fb;
+  --itemBg-active-color: #d7ecec;
+  --previous-price-color: #a3a3a3;
+}
+
+.container {
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+@media (min-width: 376px) {
+  .container {
+    max-width: 1440px;
+    padding: 40px 60px;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.is-hidden {
+  display: none;
+}
