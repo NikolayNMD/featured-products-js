@@ -1,45 +1,12 @@
-const query = `
-  {
-    products(first: 10) {
-      edges {
-        node {
-          title
-          description
-          variants(first: 1) {
-            edges {
-              node {
-                price {
-                  amount
-                  currencyCode
-                }
-                compareAtPrice {
-                  amount
-                  currencyCode
-                }
-              }
-            }
-          }
-          images(first: 2) {
-            edges {
-              node {
-                url
-                altText
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import query from "./graphQLQuery.js";
 
-const productsEndpoint =
+const API_ENDPOINT =
   "https://tsodykteststore.myshopify.com/api/2023-01/graphql.json";
 const token = "7e174585a317d187255660745da44cc7";
 
 async function fetchProducts() {
   try {
-    const response = await fetch(productsEndpoint, {
+    const response = await fetch(API_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
